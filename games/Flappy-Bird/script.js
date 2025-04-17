@@ -91,9 +91,15 @@ const bird = {
         const currentFrame = this.animation[this.animationIndex];
         ctx.drawImage(currentFrame, this.x, this.y, this.w, this.h);
     },
+    update : function () {
+        let period = state.current == state.getReady ? 10 : 5
+        if (frame % period === 0) {
+            this.animationIndex = (this.animationIndex + 1) % this.animation.length;
+        }
+    },
     flap : function () {
-        
-    }
+
+    },
 };
 
 // game State
@@ -118,9 +124,7 @@ const gameOver = {
     }
 }
 function update() {
-    // if (frame % 10 === 0) {
-    //     bird.animationIndex = (bird.animationIndex + 1) % bird.animation.length;
-    // }
+    bird.update()
 }
 
 function draw() {
