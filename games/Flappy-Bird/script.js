@@ -22,6 +22,7 @@ function clickHandler() {
         default:
             bird.speed = 0
             bird.rotation = 0
+            pipe.position = []
         state.current = state.getReady
         break;
     }
@@ -45,6 +46,16 @@ messages.src = "../../assets/FlappyBird/images/message.png"
 
 const gameover = new Image();
 gameover.src = "../../assets/FlappyBird/images/gameover.png";
+
+const pipes = [
+    "../../assets/FlappyBird/images/pipe-green-top.png",
+    "../../assets/FlappyBird/images/pipe-green-bottom.png",
+]
+const pipesImage = pipes.map(src => {
+    const img = new Image()
+    img.src = src
+    return img 
+})
 
 // Bird animation
 const yellowBirdFrames = [
@@ -101,10 +112,7 @@ const bird = {
         ctx.save();
         ctx.translate(this.x + this.w/2, this.y + this.h/2);
         ctx.rotate(this.rotation);
-        ctx.drawImage(
-            currentFrame,
-            -this.w/2, -this.h/2, 
-            this.w, this.h
+        ctx.drawImage(currentFrame,-this.w/2, -this.h/2, this.w, this.h
         );
         ctx.restore();
     },
@@ -139,6 +147,40 @@ const bird = {
     }
 };
 
+// Pipe
+const pipe = {
+    _pipes : pipesImage,
+    w: 52, h: 320,
+    dx: 2, gap: 80,
+    position: [],
+    maxYP: -150,
+    draw : function () {
+        for (let i = 0; i < this.position.length; i++) {
+            let p = this.position[i]
+            let topYp = p.y;
+            let bottomYp = topYp + this.h + this.gap;
+            ctx.drawImage(this._pipes[0], 0, 0, this.w, this.h, p.x, topYp, this.w, this.h)
+            ctx.drawImage(this._pipes[1], 0, 0, this.w, this.h, p.x, bottomYp, this.w, this.h)
+        }
+    },
+    update : function () {
+        if (state.current !=  state.game) return
+        if (frame % 100 == 0) {
+            this.position.push({
+                x:canvas.width,
+                y: this.maxYP * Math.random()
+            })
+        }
+        for (let i = 0; i < this.position.length; i++) {
+            let p = this.position[i]
+            p.x -= this.dx 
+            if (p.x + this.w <= 0) {
+                this.position.shift()
+            }
+        }
+    }
+}
+
 // game states
 const getReady = {
     sX: 0, sY: 50,
@@ -165,12 +207,14 @@ const gameOver = {
 function update() {
     bird.update();
     base.update();
+    pipe.update()
 }
 
 function draw() {
     ctx.fillStyle = "#70c5ce";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     bg.draw();
+    pipe.draw();   
     base.draw();
     bird.draw();
     getReady.draw();
