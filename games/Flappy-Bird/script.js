@@ -22,7 +22,8 @@ function clickHandler() {
             bird.speed = 0
             bird.rotation = 0
             pipe.position = [ ]
-        state.current = state.getReady
+            score.value = 0
+            state.current = state.getReady
         break;
     }
 }
@@ -174,9 +175,34 @@ const pipe = {
             }
             if (p.x + this.w <= 0) {
                 this.position.shift()
+                score.value += 1
+                score.best = Math.max(score.value, score.best)
+                localStorage.setItem("best", score.best)
             }
         }
     }
+}
+// Scores
+const score = {
+    best: parseInt(localStorage.getItem("best")) || 0,
+    value:0,
+    draw : function () {
+        ctx.fillStyle = "#fff"
+        if (state.current == state.game) {
+            ctx.lineWidth = 2;
+            ctx.font = "35px IMPACT"
+            ctx.fillText(this.value, canvas.width/2, 50)
+            ctx.strokeText(this.value, canvas.width/2, 50)
+        } else if(state.current == state.over) {
+            ctx.lineWidth = 2;
+            ctx.font = "35px IMPACT"
+            ctx.fillText(this.value, canvas.width/2, 186)
+            ctx.strokeText(this.value, canvas.width/2, 186)
+            ctx.fillText(this.best, canvas.width/2, 228)
+            ctx.strokeText(this.best, canvas.width/2, 228)
+        }
+    }
+
 }
 // game states
 const getReady = {
@@ -213,6 +239,7 @@ function draw() {
     bird.draw();
     getReady.draw();
     gameOver.draw();
+    score.draw()
 }
 function animate() {
     update();
