@@ -9,7 +9,6 @@ let state = {
     over: 2,
 }
 let degree = Math.PI/180
-
 // State handler
 function clickHandler() {
     switch (state.current) {
@@ -22,31 +21,25 @@ function clickHandler() {
         default:
             bird.speed = 0
             bird.rotation = 0
-            pipe.position = []
+            pipe.position = [ ]
         state.current = state.getReady
         break;
     }
 }
-
 // Event listeners
 document.addEventListener("click", clickHandler)
 document.addEventListener("keydown", (e) => {
     if(e.which == 32) clickHandler() // Space key
 })
-
 // Load assets
 const background = new Image();
 background.src = "../../assets/FlappyBird/images/background-day.png";
-
 const ground = new Image();
 ground.src = "../../assets/FlappyBird/images/base.png";
-
 const messages = new Image()
 messages.src = "../../assets/FlappyBird/images/message.png"
-
 const gameover = new Image();
 gameover.src = "../../assets/FlappyBird/images/gameover.png";
-
 const pipes = [
     "../../assets/FlappyBird/images/pipe-green-top.png",
     "../../assets/FlappyBird/images/pipe-green-bottom.png",
@@ -56,7 +49,6 @@ const pipesImage = pipes.map(src => {
     img.src = src
     return img 
 })
-
 // Bird animation
 const yellowBirdFrames = [
     "../../assets/FlappyBird/images/yellowbird-upflap.png",
@@ -96,7 +88,6 @@ const base = {
         }
     }
 };
-
 // Bird
 const bird = {
     animation: birdImages,
@@ -106,6 +97,7 @@ const bird = {
     gravity: 0.25,
     jump: 4.6,
     rotation: 0,
+    radius: 5,
     animationIndex: 0,
     draw: function() {
         const currentFrame = this.animation[this.animationIndex];
@@ -146,7 +138,6 @@ const bird = {
         this.speed = -this.jump;
     }
 };
-
 // Pipe
 const pipe = {
     _pipes : pipesImage,
@@ -168,19 +159,25 @@ const pipe = {
         if (frame % 100 == 0) {
             this.position.push({
                 x:canvas.width,
-                y: this.maxYP * Math.random()
+                y: this.maxYP + (Math.random() * 100)
             })
         }
         for (let i = 0; i < this.position.length; i++) {
             let p = this.position[i]
             p.x -= this.dx 
+            let bottomPipePosition = p.y + this.h + this.gap;
+            if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > p.y && bird.y - bird.radius < p.y + this.h ) {
+                state.current = state.over
+            }
+            if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > bottomPipePosition && bird.y - bird.radius < bottomPipePosition+ this.h ) {
+                state.current = state.over
+            }
             if (p.x + this.w <= 0) {
                 this.position.shift()
             }
         }
     }
 }
-
 // game states
 const getReady = {
     sX: 0, sY: 50,
@@ -192,7 +189,6 @@ const getReady = {
             ctx.drawImage(messages, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
     }
 };
-
 const gameOver = {
     sX: 0, sY: 0,
     w: 192, h: 44,
@@ -203,13 +199,11 @@ const gameOver = {
             ctx.drawImage(gameover, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
     }
 };
-
 function update() {
     bird.update();
     base.update();
     pipe.update()
 }
-
 function draw() {
     ctx.fillStyle = "#70c5ce";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -220,12 +214,10 @@ function draw() {
     getReady.draw();
     gameOver.draw();
 }
-
 function animate() {
     update();
     draw();
     frame++;
     requestAnimationFrame(animate);
 }
-
 animate();
