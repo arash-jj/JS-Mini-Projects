@@ -74,9 +74,15 @@ const base = {
     sX: 0, sY: 0,
     w: 336, h: 112,
     x: 0,
+    dx:2,
     y: canvas.height - 112,
     draw: function() {
         ctx.drawImage(ground, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+    },
+    update : function () {
+        if(state.current == state.game){
+            this.x = (this.x - this.dx) % (this.w/5)
+        }
     }
 };
 
@@ -158,6 +164,7 @@ const gameOver = {
 
 function update() {
     bird.update();
+    base.update();
 }
 
 function draw() {
