@@ -8,14 +8,26 @@ let state = {
     game: 1,
     over: 2,
 }
+const SCORE = new Audio()
+SCORE.src = "../../assets/FlappyBird/audio/point.ogg"
+const FLAP = new Audio()
+FLAP.src = "../../assets/FlappyBird/audio/wing.ogg"
+const HIT = new Audio()
+HIT.src = "../../assets/FlappyBird/audio/hit.ogg"
+const DIE = new Audio()
+DIE.src = "../../assets/FlappyBird/audio/die.ogg"
+const START = new Audio()
+START.src = "../../assets/FlappyBird/audio/swooh.ogg"
 let degree = Math.PI/180
 // State handler
 function clickHandler() {
     switch (state.current) {
         case state.getReady:
+            START.play()
             state.current = state.game
         break;
         case state.game:
+            FLAP.play()
             bird.flap()
         break;
         default:
@@ -130,6 +142,7 @@ const bird = {
             this.y = canvas.height - base.h - this.h;
             this.animationIndex = 1
             if (state.current == state.game) {
+                DIE.play()
                 state.current = state.over;
                 this.rotation = 90 * degree;
             }
@@ -168,14 +181,17 @@ const pipe = {
             p.x -= this.dx 
             let bottomPipePosition = p.y + this.h + this.gap;
             if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > p.y && bird.y - bird.radius < p.y + this.h ) {
+                HIT.play()
                 state.current = state.over
             }
             if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > bottomPipePosition && bird.y - bird.radius < bottomPipePosition+ this.h ) {
+                HIT.play()
                 state.current = state.over
             }
             if (p.x + this.w <= 0) {
                 this.position.shift()
                 score.value += 1
+                SCORE.play()
                 score.best = Math.max(score.value, score.best)
                 localStorage.setItem("best", score.best)
             }
