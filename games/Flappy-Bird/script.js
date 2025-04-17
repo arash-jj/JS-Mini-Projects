@@ -2,6 +2,34 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let frame = 0;
+let state = {
+    current: 0,
+    getReady: 0,
+    game: 1,
+    over: 2,
+}
+// stateHandler
+function clickHandler() {
+    switch (state.current) {
+        case state.getReady:
+            state.current = state.game
+
+        break;
+        case state.game:
+            bird.flap()
+        break;
+        default:
+        state.current = state.getReady
+        break;
+    }
+}
+// eventHandler
+document.addEventListener("click",clickHandler)
+document.addEventListener("keydown",(e)=>{
+    //32 = spaceKey on keyboard
+    if(e.which == 32 ) clickHandler()
+    
+})
 
 // Load images
 const background = new Image();
@@ -9,6 +37,13 @@ background.src = "../../assets/FlappyBird/images/background-day.png";
 
 const ground = new Image();
 ground.src = "../../assets/FlappyBird/images/base.png";
+
+// messages
+const messages = new Image()
+messages.src = "../../assets/FlappyBird/images/message.png"
+
+const gameover = new Image();
+gameover.src = "../../assets/FlappyBird/images/gameover.png";
 
 // Bird animation frames
 const yellowBirdFrames = [
@@ -55,9 +90,33 @@ const bird = {
     draw: function () {
         const currentFrame = this.animation[this.animationIndex];
         ctx.drawImage(currentFrame, this.x, this.y, this.w, this.h);
+    },
+    flap : function () {
+        
     }
 };
 
+// game State
+const getReady = {
+    sX: 0, sY: 50,
+    w: 184, h: 267,
+    x: canvas.width/2 -184/2,
+    y: 50,
+    draw: function () {
+        if (state.current == state.getReady) 
+            ctx.drawImage(messages, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+    }
+}
+const gameOver = {
+    sX: 0, sY: 0,
+    w: 192, h: 44,
+    x: canvas.width/2 -192/2,
+    y: 100,
+    draw: function () {
+        if(state.current == state.over)
+            ctx.drawImage(gameover, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+    }
+}
 function update() {
     // if (frame % 10 === 0) {
     //     bird.animationIndex = (bird.animationIndex + 1) % bird.animation.length;
@@ -70,6 +129,8 @@ function draw() {
     bg.draw();
     base.draw();
     bird.draw();
+    getReady.draw();
+    gameOver.draw();
 }
 
 function animate() {
