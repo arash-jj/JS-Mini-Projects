@@ -6,8 +6,8 @@
 | Name       | Status     | Resources                      |
 |----------------|------------|--------------------------------|
 | Flappy Bird       | Done | [View](games/Flappy-Bird)       |
-| Tic Tac Toe      | In Progress | [View](games/)       |
-| Snake      | Planning | [View](games/)       |
+| Tic Tac Toe      | Done | [View](games/Tic-Tac-Toe)       |
+| Snake      | In Progress | [View](games/)       |
 | Cars        | Planning | [View](games/)        |
 
 ## 🛠️ Projects
