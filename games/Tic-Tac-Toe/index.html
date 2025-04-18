@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .gameContainer {
+            text-align: center;
+        }
+        .header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 2em;
+            margin: 0;
+        }
+        .score{
+            font-size: 1.5em;
+            margin: 0 20px;
+        }
+        .cellsContainer {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            margin-bottom: 20px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border: 2px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            cursor: pointer;
+        }
+        .gameStatus {
+            font-size: 1.5em;
+        }
+        #restartGame {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .cell:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="gameContainer">
+        <div class="header">
+            <p id="playerOne" class="score"></p>
+            <h1 class="title">Tic Tac Toe</h1>
+            <p id="playerTwo" class="score"></p>
+        </div>
+        <div class="cellsContainer">
+            <div cell-data="0" class="cell"></div>
+            <div cell-data="1" class="cell"></div>
+            <div cell-data="2" class="cell"></div>
+            <div cell-data="3" class="cell"></div>
+            <div cell-data="4" class="cell"></div>
+            <div cell-data="5" class="cell"></div>
+            <div cell-data="6" class="cell"></div>
+            <div cell-data="7" class="cell"></div>
+            <div cell-data="8" class="cell"></div>
+        </div>
+        <h2 id="gameStatus"></h2>
+        <button id="restartGame">Restart</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
