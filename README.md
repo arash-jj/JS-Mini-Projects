@@ -5,10 +5,10 @@
 
 | Name       | Status     | Resources                      |
 |----------------|------------|--------------------------------|
-| Flappy Bird       | In Progress | [View](topics/)       |
-| Tic Tac Toe      | Planning | [View](topics/)       |
-| Snake      | Planning | [View](topics/)       |
-| Cars        | Planning | [View](topics/)        |
+| Flappy Bird       | Done | [View](games/Flappy-Bird)       |
+| Tic Tac Toe      | In Progress | [View](games/)       |
+| Snake      | Planning | [View](games/)       |
+| Cars        | Planning | [View](games/)        |
 
 ## 🛠️ Projects
 
