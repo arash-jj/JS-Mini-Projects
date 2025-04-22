@@ -6,10 +6,10 @@
 
  ## Different States View 📷
  <p align="left">
-  <a href='https://github.com/arash-jj/Web-based-JavaScript-games/tree/main/games/Tic-Tac-Toe'>
-    <img width="48%" src="../../assets/snake/preview/snake-inGameState.png" alt="InGame" />
+  <a href='https://github.com/arash-jj/Web-based-JavaScript-games/tree/main/games/Snake'>
+    <img width="48%" src="../../assets/Snake/preview/snake-inGameState.png" alt="InGame" />
   </a>
-  <a href='https://github.com/arash-jj/Web-based-JavaScript-games/tree/main/games/Tic-Tac-Toe'>
-    <img width="48%" src="../../assets/snake/preview/snake-gameOverState.png" alt="GameOver" />
+  <a href='https://github.com/arash-jj/Web-based-JavaScript-games/tree/main/games/Snake'>
+    <img width="48%" src="../../assets/Snake/preview/snake-gameOverState.png" alt="GameOver" />
   </a>
 </p>

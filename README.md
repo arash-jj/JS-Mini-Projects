@@ -7,7 +7,7 @@
 |----------------|------------|--------------------------------|
 | Flappy Bird       | Done | [View](games/Flappy-Bird)       |
 | Tic Tac Toe      | Done | [View](games/Tic-Tac-Toe)       |
-| Snake      | Done | [View](games/snake)       |
+| Snake      | Done | [View](games/Snake)       |
 | Cars        | In Progress | [View](games/)        |
 
 
