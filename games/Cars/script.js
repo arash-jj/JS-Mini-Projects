@@ -9,6 +9,11 @@ let state = {
     inGame : 1,
     GameOver : 2
 }
+const laneCenters = [
+    cvs.width * 0.25,
+    cvs.width * 0.50,
+    cvs.width * 0.75
+];
 // Events
 window.addEventListener("keydown",changeCarDirection)
 // Loading Assets
@@ -58,7 +63,6 @@ const sprites = [
     { id:  8, x: 358, y: 228, width: 108, height: 206, dx: 358, dy: 228, dw: 108, dh: 206 }, // gray car
     { id:  9, x: 480, y: 261, width: 108, height: 206, dx: 480, dy: 261, dw: 108, dh: 206 }, // police car
     { id: 10, x: 240, y: 448, width: 108, height: 202, dx: 196, dy: 500, dw: 108, dh: 202 }, // main car
-    { id: 11, x: 660, y: 466, width:  81, height:  81, dx: 660, dy: 466, dw:  81, dh:  81 }, // hole
 ]
 const mainCar = {
     car: sprites[9],
@@ -66,6 +70,66 @@ const mainCar = {
         ctx.drawImage(spriteSheet, this.car.x, this.car.y, this.car.width, this.car.height, this.car.dx, this.car.dy, this.car.dw, this.car.dh)
     }
 }
+function overlaps(a, b) {
+    return !(
+        a.x + a.width  < b.x ||
+        b.x + b.width  < a.x ||
+        a.y + a.height < b.y ||
+        b.y + b.height < a.y
+    );
+}
+function canSpawnAt(candidate) {
+    return obstacles.list.every(existing =>
+        !overlaps(
+            { x: candidate.dx, y: candidate.dy, width: candidate.dw, height: candidate.dh },
+            { x: existing.dx, y: existing.dy, width: existing.dw, height: existing.dh }
+        )
+    );
+}
+const obstacles = {
+    list: [],
+    spawnInterval: 120,
+    maxTries: 5,
+    update() {
+        if (frame % this.spawnInterval === 0) {
+            this.spawn();
+        }
+        this.list.forEach(o => o.dy += roadImage.dy);
+        this.list = this.list.filter(o => o.dy < cvs.height);
+    },
+    draw() {
+        this.list.forEach(o => {
+            ctx.drawImage(
+            spriteSheet,
+            o.x, o.y, o.width, o.height,
+            o.dx, o.dy, o.dw, o.dh
+            );
+        });
+    },
+    spawn() {
+        let tries = 0;
+        while (tries < this.maxTries) {
+            tries++;
+            const pool = sprites.filter(s => s.id !== 10);
+            const s = pool[Math.floor(Math.random() * pool.length)];
+            const cx = laneCenters[Math.floor(Math.random() * laneCenters.length)];
+            const candidate = {
+                x: s.x,
+                y: s.y,
+                width: s.width,
+                height: s.height,
+                dx: cx - s.width/2,
+                dy: -s.height,
+                dw: s.width,
+                dh: s.height
+            };
+            if (canSpawnAt(candidate)) {
+                this.list.push(candidate);
+                return;
+            }
+        }
+    }
+};
 function changeCarDirection(e){
     // w = 87 , d = 68, s = 83, a= 65,
     const keyPressed = e.keyCode;
@@ -83,11 +147,13 @@ function changeCarDirection(e){
 }
 function update() {
     roadImage.update()
+    obstacles.update();
 }
 function draw() {
     roadImage.init()
     roadImage.draw()
     mainCar.draw()
+    obstacles.draw();
 }
 function animation() {
     draw()
