@@ -4,7 +4,7 @@ cvs.width  = 500;
 cvs.height = 600;
 let frame = 0
 let state = {
-    currentState : 1,
+    currentState : 0,
     readyToStart : 0,
     inGame : 1,
     GameOver : 2
@@ -68,6 +68,34 @@ const mainCar = {
     car: sprites[9],
     draw : function () {
         ctx.drawImage(spriteSheet, this.car.x, this.car.y, this.car.width, this.car.height, this.car.dx, this.car.dy, this.car.dw, this.car.dh)
+    },
+    update : function () {
+        if (this.car.dx == 6 || this.car.dx == 386 || this.car.dy == 0) {
+            state.currentState = state.GameOver
+        }
+    }
+}
+function changeCarDirection(e){
+    // w = 87 , d = 68, s = 83, a = 65, space = 32, enter = 13, r = 82, 
+    const car = sprites[9];
+    const keyPressed = e.keyCode;
+    let speed = 10;
+    if (state.currentState === state.readyToStart) {
+        if (keyPressed === 13 || keyPressed === 32) {
+            state.currentState = state.inGame;
+        }
+    }else if (state.currentState === state.inGame) {
+        if (keyPressed === 87) {
+            car.dy = car.dy-speed
+        }else if(keyPressed === 83) {
+            car.dy = car.dy+speed
+        }else if(keyPressed === 65) {
+            car.dx = car.dx-speed
+        }else if(keyPressed === 68) {
+            car.dx = car.dx+speed
+        }
+    }else if(state.currentState === state.GameOver){
+        if (keyPressed === 82) resetGame();
     }
 }
 function overlaps(a, b) {
@@ -96,6 +124,18 @@ const obstacles = {
         }
         this.list.forEach(o => o.dy += roadImage.dy);
         this.list = this.list.filter(o => o.dy < cvs.height);
+        const mc = mainCar.car;
+        const mainRect = {
+            x: mc.dx, y: mc.dy,
+            width: mc.dw, height: mc.dh
+        };
+        for (let o of this.list) {
+            const obsRect = { x: o.dx, y: o.dy, width: o.dw, height: o.dh };
+            if (overlaps(mainRect, obsRect)) {
+                state.currentState = state.GameOver;
+                break;
+            }
+        }
     },
     draw() {
         this.list.forEach(o => {
@@ -105,6 +145,7 @@ const obstacles = {
             o.dx, o.dy, o.dw, o.dh
             );
         });
+        
     },
     spawn() {
         let tries = 0;
@@ -130,24 +171,34 @@ const obstacles = {
         }
     }
 };
-function changeCarDirection(e){
-    // w = 87 , d = 68, s = 83, a= 65,
-    const keyPressed = e.keyCode;
-    let speed = 10;
-    const car = sprites[9];
-    if (keyPressed === 87) {
-        car.dy = car.dy-speed
-    }else if(keyPressed === 83) {
-        car.dy = car.dy+speed
-    }else if(keyPressed === 65) {
-        car.dx = car.dx-speed
-    }else if(keyPressed === 68) {
-        car.dx = car.dx+speed
-    }
+function resetGame() {
+    mainCar.car.dx = 196;
+    mainCar.car.dy = 500;
+    obstacles.list = [];
+    frame = 0;
+    state.currentState = state.readyToStart;
+}
+function drawReadyScreen() {
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    ctx.fillStyle = "black";
+    ctx.font = "24px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("PRESS ENTER OR SPACE TO START", cvs.width/2, cvs.height/2);
+}
+function drawGameOverScreen() {
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.fillStyle = "white";
+    ctx.font = "40px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME OVER", cvs.width/2, cvs.height/2 - 20);
+    ctx.font = "20px sans-serif";
+    ctx.fillText("PRESS R TO RESTART", cvs.width/2, cvs.height/2 + 20);
 }
 function update() {
     roadImage.update()
     obstacles.update();
+    mainCar.update()
 }
 function draw() {
     roadImage.init()
@@ -156,9 +207,23 @@ function draw() {
     obstacles.draw();
 }
 function animation() {
-    draw()
-    update()
+    switch(state.currentState) {
+        case state.readyToStart:
+            drawReadyScreen();
+            break;
+        case state.inGame:
+            update();
+            draw();
+            break;
+        case state.GameOver:
+            draw();
+            drawGameOverScreen();
+        break;
+    }
     frame++
     requestAnimationFrame(animation);
 }
-animation();
+road.onload = () => {
+    roadImage.init();
+    animation();
+};
