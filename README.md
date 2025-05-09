@@ -9,6 +9,7 @@
 | Tic Tac Toe      | Done | [View](games/Tic-Tac-Toe)       |
 | Snake      | Done | [View](games/Snake)       |
 | Cars        | Done | [View](games/Cars)        |
+| Rock Paper Scissor        | Done | [View](games/Rock-Paper-Scissors)        |
 
 
 ## 🚀 Quick Start
