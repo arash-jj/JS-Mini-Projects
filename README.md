@@ -9,6 +9,7 @@
 | Snake              | Done   | [View](projects/Snake)               |
 | Cars               | Done   | [View](projects/Cars)                |
 | Rock Paper Scissor | Done   | [View](projects/Rock-Paper-Scissors) |
+| Palindrome Checker | Done   | [View](projects/Palindrome-Checker) |
 
 ## 🚀 Quick Start
 

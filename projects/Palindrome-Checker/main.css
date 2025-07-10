@@ -1,0 +1,81 @@
+body{
+    background-color: #aa57cb;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.wrapper{
+    padding: 12px;
+}
+.container{
+    width: 40%;
+    height: 100%;
+    background-color: white;
+    margin: 0 auto;
+    border-radius: 6px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+    padding-block: 10px;
+    padding-inline: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.subtitle{
+    font-size: 12px;
+    color: #474747;
+}
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+input[type="text"]{
+    all: unset;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.4s ease-in-out;
+}
+input[type="text"]:hover{
+    box-shadow: 0 0 2px #aa57cb;
+    transition: all 0.4s ease-in-out;
+}
+input[type="text"]:focus{
+    box-shadow: 0    3px 6px #aa57cb;
+    transition: all 0.4s ease-in-out;
+}
+#checkBtn{
+    all: unset;
+    text-align: center;
+    color: white;
+    background-color: #aa57cb;
+    border-radius: 4px;
+    cursor: pointer;
+    padding-block: 4px;
+}
+.result{
+    text-align: center;
+    font-size: 14px;
+}
+.resultTxt{
+    display: none;
+}
+.inputValue{
+    color: #aa57cb;
+}
+
+@media (max-width: 540px) {
+    .container{
+        width: 100%;
+    }
+}
