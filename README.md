@@ -10,6 +10,7 @@
 | Cars               | Done   | [View](projects/Cars)                |
 | Rock Paper Scissor | Done   | [View](projects/Rock-Paper-Scissors) |
 | Palindrome Checker | Done   | [View](projects/Palindrome-Checker) |
+| Gradient Color Generator | Done   | [View](projects/Gradient-Color-Generator) |
 
 ## 🚀 Quick Start
 
