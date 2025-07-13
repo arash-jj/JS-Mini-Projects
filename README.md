@@ -12,6 +12,7 @@
 | Palindrome Checker | Done   | [View](projects/Palindrome-Checker) |
 | Gradient Color Generator | Done   | [View](projects/Gradient-Color-Generator) |
 | Typing Animation | Done   | [View](projects/Text-Typing-Effect) |
+| Calculator  | Done   | [View](projects/Calculator) |
 
 ## 🚀 Quick Start
 
