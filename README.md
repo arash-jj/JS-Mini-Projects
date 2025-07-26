@@ -13,6 +13,7 @@
 | Gradient Color Generator | Done   | [View](projects/Gradient-Color-Generator) |
 | Typing Animation | Done   | [View](projects/Text-Typing-Effect) |
 | Calculator  | Done   | [View](projects/Calculator) |
+| Virtual-Piano  | Done   | [View](projects/Virtual-Piano) |
 
 ## 🚀 Quick Start
 
