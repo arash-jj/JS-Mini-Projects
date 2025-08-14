@@ -8,3 +8,9 @@ const randomNumGenerator = (min, max) => {
 let randomNum = randomNumGenerator(1, 26)
 const selectedImages = images.slice(randomNum, randomNum + 8)
 
+// ! test
+document.querySelectorAll(".card").forEach(elem=>{
+    elem.addEventListener("click",()=>{
+        elem.classList.toggle("flip")
+    })
+})
