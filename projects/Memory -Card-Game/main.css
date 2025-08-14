@@ -1,0 +1,96 @@
+/* global styles */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* elements style */
+
+.wrapper{
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: 400px;
+    height: 410px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 5px;
+    perspective: 1000px;
+}
+.card{
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    user-select: none;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); 
+    border-radius: 8px;
+}
+.card:hover {
+    transform: rotateY(180deg)
+}
+.card:hover > .back {
+    display: block;
+}
+.card:hover > .front {
+    display: none;
+}
+.back {
+    transform: rotateY(180deg);
+    display: none;
+}
+.front, .back {
+    backface-visibility: hidden; 
+}
+.card.shakeAnimation{
+    animation: shake 0.4s ease-in-out;
+}
+.card.viewForm {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 7px; 
+    background: #fff;
+    pointer-events: none;
+    backface-visibility: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.25s linear;
+}
+
+/* animation */
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(13px);
+    }
+    40% {
+        transform: translateX(-13px);
+    }
+    60% {
+        transform: translateX(8px);
+    }
+    60% {
+        transform: translateX(-8px);
+    }
+}
