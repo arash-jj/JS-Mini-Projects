@@ -14,6 +14,7 @@
 | Typing Animation | Done   | [View](projects/Text-Typing-Effect) |
 | Calculator  | Done   | [View](projects/Calculator) |
 | Virtual-Piano  | Done   | [View](projects/Virtual-Piano) |
+| Memory Cards Game  | Done   | [View](projects/Memory-Card-Game/) |
 
 ## 🚀 Quick Start
 
